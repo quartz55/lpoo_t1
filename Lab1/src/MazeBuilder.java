@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Prim {
+public class MazeBuilder {
     int maze[][];
     int visited[][];
     ArrayList<Point> stack;
