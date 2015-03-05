@@ -2,6 +2,9 @@ public class GameObject {
 
     private int x,y,xspeed,yspeed;
 
+
+    private char cliChar = 'a';
+
     GameObject(int x, int y){
         this.x = x;
         this.y = y;
@@ -11,6 +14,17 @@ public class GameObject {
     public void update(){
         x += xspeed;
         y += yspeed;
+
+        xspeed = 0;
+        yspeed = 0;
+    }
+
+    public char getCliChar() {
+        return cliChar;
+    }
+
+    public void setCliChar(char cliChar) {
+        this.cliChar = cliChar;
     }
 
     public int getX() {

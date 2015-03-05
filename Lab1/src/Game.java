@@ -1,5 +1,4 @@
 import java.util.Random;
-import java.util.Scanner;
 
 public class Game {
 
@@ -31,6 +30,13 @@ public class Game {
 
     private void update(){
 
+        if(hero.getX() == sword.getX()
+                && hero.getY() == sword.getY()
+                && !sword.isPickedUp()){
+            sword.setPickedUp(true);
+            hero.setSword(true);
+        }
+
         Random rand = new Random();
         if(rand.nextBoolean()){
             dragon.setXspeed(rand.nextInt(3)-1);
@@ -39,13 +45,15 @@ public class Game {
             dragon.setYspeed(rand.nextInt(3)-1);
         }
 
-        if(maze.getPosition(dragon.getX()+dragon.getXspeed(), dragon.getY()+dragon.getYspeed())== 0){
-            dragon.update();
+        if(maze.getPosition(dragon.getX()+dragon.getXspeed(), dragon.getY()+dragon.getYspeed()) != 0){
+            dragon.setXspeed(0);
+            dragon.setYspeed(0);
         }
 
-        if(maze.getPosition(hero.getX()+hero.getXspeed(), hero.getY()+hero.getYspeed()) == 0
-             || (maze.getPosition(hero.getX()+hero.getXspeed(), hero.getY()+hero.getYspeed()) == 2 && hero.hasSword())){
-            hero.update();
+        if(maze.getPosition(hero.getX()+hero.getXspeed(), hero.getY()+hero.getYspeed()) == 1
+             || (maze.getPosition(hero.getX()+hero.getXspeed(), hero.getY()+hero.getYspeed()) == 2 && !hero.hasSword())){
+            hero.setXspeed(0);
+            hero.setYspeed(0);
         }
 
         if(maze.getPosition(hero.getX(), hero.getY())== 2){
@@ -54,13 +62,14 @@ public class Game {
         }
 
         boolean adjacente = false;
-        for(int i = -1; i <=1; i++)
-            for(int j = -1; j <=1; j++) {
-                if(Math.abs(i) == Math.abs(j) && i != 0) continue;
+        for(int i = -1; i <=1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (Math.abs(i) == Math.abs(j) && i != 0) continue;
                 if (hero.getX() == dragon.getX() + j
                         && hero.getY() == dragon.getY() + i)
                     adjacente = true;
             }
+        }
 
         if(adjacente) {
             if (!hero.hasSword()) {
@@ -71,18 +80,8 @@ public class Game {
             }
         }
 
-        if(hero.getX() == sword.getX()
-                && hero.getY() == sword.getY()
-                && !sword.isPickedUp()){
-            sword.setPickedUp(true);
-            hero.setSword(true);
-        }
-
-        hero.setXspeed(0);
-        hero.setYspeed(0);
-
-        dragon.setXspeed(0);
-        dragon.setYspeed(0);
+        hero.update();
+        dragon.update();
     }
 
     private void draw(){
@@ -92,14 +91,9 @@ public class Game {
         for(int i = 0; i < maze.getH(); i++) {
             for (int j = 0; j < maze.getW(); j++) {
                 if(i == hero.getY() && j == hero.getX()) {
-                    if(hero.hasSword())
-                        System.out.print("A");
-                    else
-                        System.out.print("H");
-
+                    System.out.print(hero.getCliChar());
                     continue;
                 }
-
                 else if(i == sword.getY() && j == sword.getX()
                         && !sword.isPickedUp()) {
                     if(i == dragon.getY() && j == dragon.getX()
@@ -113,7 +107,7 @@ public class Game {
 
                 else if(i == dragon.getY() && j == dragon.getX()
                         && dragon.isAlive()) {
-                    System.out.print("D");
+                    System.out.print(dragon.getCliChar());
                     continue;
                 }
 
@@ -123,7 +117,6 @@ public class Game {
                     System.out.print(".");
                 else if (maze.getPosition(j,i) == 0)
                     System.out.print(" ");
-
             }
             System.out.println();
         }

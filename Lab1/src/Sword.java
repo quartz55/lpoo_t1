@@ -3,6 +3,7 @@ public class Sword extends GameObject{
 
     public Sword(int x, int y){
         super(x,y);
+        this.setCliChar('E');
     }
 
     public boolean isPickedUp() {
