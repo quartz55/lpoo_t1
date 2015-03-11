@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Dragon extends GameObject{
     private double chanceToSleep = 0.5;
     private double chanceToWake = 0.5;
@@ -9,7 +11,7 @@ public class Dragon extends GameObject{
         this.setCliChar('D');
     }
 
-    public void update(){
+    public void update(Maze maze){
         if(sleeping) {
             this.setCliChar('d');
             if (Math.random() <= chanceToWake)
@@ -17,6 +19,18 @@ public class Dragon extends GameObject{
         }
         else if(Math.random() <= chanceToSleep)
                 sleeping = true;
+
+        Random rand = new Random();
+        if (rand.nextBoolean()) {
+            this.setXspeed(rand.nextInt(3) - 1);
+        } else {
+            this.setYspeed(rand.nextInt(3) - 1);
+        }
+
+        if (maze.getPosition(this.getX() + this.getXspeed(), this.getY() + this.getYspeed()) != 0) {
+            this.setXspeed(0);
+            this.setYspeed(0);
+        }
 
         if(!sleeping){
             this.setCliChar('D');
