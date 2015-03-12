@@ -36,7 +36,7 @@ public class Maze {
             case 3:
                 yspeed = 1; break;
         }
-        while(xi != xf && yi != yf){
+        while(xi != xf || yi != yf){
             xi+=xspeed;
             yi+=yspeed;
             if(getPosition(xi,yi) != 0) return false;

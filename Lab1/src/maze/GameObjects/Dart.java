@@ -5,7 +5,7 @@ public class Dart extends GameObject {
 
     public Dart(int x, int y) {
         super(x, y);
-        this.setCliChar('t');
+        this.setCliChar('-');
     }
 
     public boolean isPickedUp() {

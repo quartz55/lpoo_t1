@@ -15,6 +15,7 @@ public class Game {
     private Sword sword;
     private Shield shield;
     private ArrayList<Dragon> dragons = new ArrayList<Dragon>();
+    private ArrayList<Dart> darts = new ArrayList<Dart>();
 
     private void getInput() {
         System.out.print("Command(w/a/s/d/f)? ");
@@ -47,6 +48,7 @@ public class Game {
         if (hero.getX() == sword.getX()
                 && hero.getY() == sword.getY()
                 && !sword.isPickedUp()) {
+            sword.setPickedUp(true);
             hero.setSword(true);
         }
 
@@ -56,6 +58,14 @@ public class Game {
             shield.setPickedUp(true);
             hero.setShield(true);
         }
+        for(int i = 0; i < darts.size(); i ++)
+            if(hero.getX() == darts.get(i).getX()
+                    && hero.getY() == darts.get(i).getY()
+                    && !darts.get(i).isPickedUp()){
+                hero.addDart();
+                darts.get(i).setPickedUp(true);
+                darts.remove(i);
+            }
 
         /* Update dragons ArrayList */
         for (int i = 0; i < dragons.size(); i++) {
@@ -110,6 +120,15 @@ public class Game {
                         }
                     }
                     if (printed) continue;
+
+                    for (int k = 0; k < darts.size(); k++) {
+                        if (i == darts.get(k).getY() && j == darts.get(k).getX()
+                                && !darts.get(k).isPickedUp()) {
+                            System.out.print(darts.get(k).getCliChar());
+                            printed = true;
+                        }
+                    }
+                    if (printed) continue;
                     if (maze.getPosition(j, i) == 2)
                         System.out.print("S");
                     else if (maze.getPosition(j, i) == 1)
@@ -125,6 +144,7 @@ public class Game {
     }
 
     private void fireDart(int direction){
+        if(hero.getDarts() <= 0) return;
         hero.removeDart();
         for(int i = 0; i < dragons.size(); i++){
             Dragon temp_dragon = dragons.get(i);
@@ -210,13 +230,21 @@ public class Game {
             }
         }
         int number_of_dragons = 3;
-        while (true) {
+        while (number_of_dragons > 0) {
             randomX = (int) (Math.random() * maze.getW());
             randomY = (int) (Math.random() * maze.getH());
             if (maze.getPosition(randomX, randomY) == 0) {
                 dragons.add(new Dragon(randomX, randomY, difficulty));
                 number_of_dragons--;
-                if (number_of_dragons <= 0) break;
+            }
+        }
+        int number_of_darts = 4;
+        while (number_of_darts > 0) {
+            randomX = (int) (Math.random() * maze.getW());
+            randomY = (int) (Math.random() * maze.getH());
+            if (maze.getPosition(randomX, randomY) == 0) {
+                darts.add(new Dart(randomX, randomY));
+                number_of_darts--;
             }
         }
     }
