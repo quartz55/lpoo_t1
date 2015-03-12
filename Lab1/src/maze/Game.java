@@ -27,10 +27,14 @@ public class Game {
             hero.setYspeed(hero.getYspeed() - 1);
         } else if (command.equals("s")) {
             hero.setYspeed(hero.getYspeed() + 1);
+        } else if (command.equals("f")) {
+            System.out.print("Direction(w/a/s/d)? ");
+            command = input.readConsoleInput();
+            if(command.equals("a")) fireDart(0);
+            else if(command.equals("d")) fireDart(1);
+            else if(command.equals("w")) fireDart(2);
+            else if(command.equals("s")) fireDart(3);
         }
-     else if (command.equals("f")) {
-            hero.removeDart();
-    }
     }
 
     private void update() {
@@ -43,7 +47,6 @@ public class Game {
         if (hero.getX() == sword.getX()
                 && hero.getY() == sword.getY()
                 && !sword.isPickedUp()) {
-            sword.setPickedUp(true);
             hero.setSword(true);
         }
 
@@ -121,6 +124,15 @@ public class Game {
         System.out.println("Darts: " + hero.getDarts());
     }
 
+    private void fireDart(int direction){
+        hero.removeDart();
+        for(int i = 0; i < dragons.size(); i++){
+            Dragon temp_dragon = dragons.get(i);
+            if(maze.checkLineOfSight(hero.getX(), hero.getY(), temp_dragon.getX(), temp_dragon.getY(), direction)) {
+                dragons.remove(i);
+            }
+        }
+    }
     public void loop() {
         draw();
         /* Main game loop */

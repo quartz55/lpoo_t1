@@ -23,18 +23,35 @@ public class Maze {
         this.w = w;
     }
 
+    public boolean checkLineOfSight(int xi, int yi, int xf, int yf, int direction){
+        int xspeed = 0;
+        int yspeed = 0;
+        switch(direction){
+            case 0:
+                xspeed = -1; break;
+            case 1:
+                xspeed = 1; break;
+            case 2:
+                yspeed = -1; break;
+            case 3:
+                yspeed = 1; break;
+        }
+        while(xi != xf && yi != yf){
+            xi+=xspeed;
+            yi+=yspeed;
+            if(getPosition(xi,yi) != 0) return false;
+        }
+        return true;
+    }
     public int getH(){
         return h;
     }
-
     public int getW(){
         return w;
     }
-
     public int[][] getMaze(){
         return maze;
     }
-
     public int getPosition(int x, int y){
         if(x >= w || y >= h){
             System.out.println(x + " - " + y);
