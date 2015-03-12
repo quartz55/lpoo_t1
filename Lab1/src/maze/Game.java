@@ -132,7 +132,7 @@ public class Game {
                     if (maze.getPosition(j, i) == 2)
                         System.out.print("S");
                     else if (maze.getPosition(j, i) == 1)
-                        System.out.print(".");
+                        System.out.print("|");
                     else if (maze.getPosition(j, i) == 0)
                         System.out.print(" ");
                 }
