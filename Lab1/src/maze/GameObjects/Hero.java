@@ -1,16 +1,30 @@
+package maze.GameObjects;
+
 public class Hero extends GameObject{
 
     private boolean sword = false;
+    private boolean shield = false;
+
+
+    private int darts = 0;
 
     public Hero(int x, int y){
         super(x,y);
         this.setCliChar('H');
     }
 
-    public void update(Maze maze){
-        if(hasSword())
+    private void updateCliChar(){
+        if(hasSword() && hasShield())
+            this.setCliChar('B');
+        else if(hasSword() && !hasShield())
             this.setCliChar('A');
+        else if(!hasSword() && hasShield())
+            this.setCliChar('P');
         else this.setCliChar('H');
+    }
+
+    public void update(Maze maze){
+        updateCliChar();
 
         if(maze.getPosition(this.getX()+this.getXspeed(), this.getY()+this.getYspeed()) == 1
                 || (maze.getPosition(this.getX()+this.getXspeed(), this.getY()+this.getYspeed()) == 2 && !this.hasSword())){
@@ -28,8 +42,25 @@ public class Hero extends GameObject{
     public boolean hasSword() {
         return sword;
     }
-
     public void setSword(boolean sword) {
         this.sword = sword;
+        updateCliChar();
+    }
+
+    public boolean hasShield() {
+        return shield;
+    }
+    public void setShield(boolean shield) {
+        this.shield = shield;
+        updateCliChar();
+    }
+
+    public int getDarts() {
+        return darts;
+    }
+    public void addDart(){ this.darts++;}
+    public void removeDart(){ this.darts--;}
+    public void setDarts(int darts) {
+        this.darts = darts;
     }
 }

@@ -1,3 +1,5 @@
+package maze.GameObjects;
+
 public class GameObject {
 
     private int x,y,xspeed,yspeed;

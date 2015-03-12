@@ -1,9 +1,11 @@
-public class Sword extends GameObject{
+package maze.GameObjects;
+
+public class Dart extends GameObject {
     private boolean pickedUp = false;
 
-    public Sword(int x, int y){
-        super(x,y);
-        this.setCliChar('E');
+    public Dart(int x, int y) {
+        super(x, y);
+        this.setCliChar('t');
     }
 
     public boolean isPickedUp() {

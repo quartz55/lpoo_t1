@@ -1,3 +1,7 @@
+package maze.GameObjects;
+
+import maze.Utils.MazeBuilder;
+
 public class Maze {
     private int h=0, w=0;
     private int[][] maze;
@@ -5,6 +9,7 @@ public class Maze {
     public void loadMaze(int number){
         switch (number){
             case 1:
+                maze = new int[10][10];
                 maze = baseMaze1;
                 h = w = 10;
                 break;
@@ -31,20 +36,24 @@ public class Maze {
     }
 
     public int getPosition(int x, int y){
-        if(x >= w || y >= h) throw new IndexOutOfBoundsException();
+        if(x >= w || y >= h){
+            System.out.println(x + " - " + y);
+            throw new IndexOutOfBoundsException();
+        }
         else return maze[y][x];
     }
 
     /* Predefined mazes */
     private int[][] baseMaze1 = {
-            {1,1,1,1,1,1,1,1,1},
-            {1,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,2},
-            {1,0,0,0,0,0,0,0,1},
-            {1,1,1,1,1,1,1,1,1},
+            {1,1,1,1,1,1,1,1,1,1},
+            {1,0,0,0,0,0,0,0,0,1},
+            {1,0,1,1,0,1,0,1,0,1},
+            {1,0,1,1,0,1,0,1,0,1},
+            {1,0,1,1,0,1,0,1,0,1},
+            {1,0,0,0,0,0,0,1,0,2},
+            {1,0,1,1,0,1,0,1,0,1},
+            {1,0,1,1,0,1,0,1,0,1},
+            {1,0,1,1,0,0,0,0,0,1},
+            {1,1,1,1,1,1,1,1,1,1}
     };
 }

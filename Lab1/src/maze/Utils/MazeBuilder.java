@@ -1,3 +1,5 @@
+package maze.Utils;
+
 import java.util.ArrayList;
 
 public class MazeBuilder {
