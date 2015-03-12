@@ -8,6 +8,9 @@ public class Dragon extends GameObject{
     private boolean alive = true;
     private boolean sleeping = false;
     private int difficulty = 0;
+    private double chanceToBreatheFire= 0.5;
+    private boolean fire = false;
+    
 
     public Dragon(int x, int y, int difficulty) {
         super(x, y);
@@ -16,6 +19,8 @@ public class Dragon extends GameObject{
     }
 
     public void update(Maze maze){
+    	fire = false;
+    	if(Math.random() <= chanceToBreatheFire) fire = true;
         if(difficulty > 0) {
             Random rand = new Random();
             if (rand.nextBoolean()) {
@@ -63,5 +68,13 @@ public class Dragon extends GameObject{
 
     public void setSleeping(boolean sleeping) {
         this.sleeping = sleeping;
+    }
+    
+    public boolean isBreathingFire() {
+        return fire;
+    }
+    
+    public void setFire(boolean fire) {
+        this.fire = fire;
     }
 }

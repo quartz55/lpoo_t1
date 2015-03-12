@@ -51,7 +51,7 @@ public class Game {
             sword.setPickedUp(true);
             hero.setSword(true);
         }
-
+        
         if (hero.getX() == shield.getX()
                 && hero.getY() == shield.getY()
                 && !shield.isPickedUp()) {
@@ -68,8 +68,19 @@ public class Game {
             }
 
         /* Update dragons ArrayList */
-        for (int i = 0; i < dragons.size(); i++) {
-
+        for (int i = 0; i < dragons.size(); i++) {               
+        	for(int k=0; k < 4; k++){
+        		
+        		if (maze.checkLineOfSight(dragons.get(i).getX(), dragons.get(i).getY(), hero.getX(),hero.getY(),k)){
+        			if(Math.pow(hero.getX() - dragons.get(i).getX(), 2) + Math.pow(hero.getY() - dragons.get(i).getY(), 2) <= 9){
+        				if (!hero.hasShield() && !dragons.get(i).isSleeping() && dragons.get(i).isBreathingFire()){
+        						 done = true;
+        		                  win = false;
+        				}			
+        			}		
+        		}
+        	}
+   
             boolean adjacente = false;
             for (int j = -1; j <= 1; j++) {
                 for (int k = -1; k <= 1; k++) {
