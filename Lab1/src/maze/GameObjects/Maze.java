@@ -59,7 +59,16 @@ public class Maze {
         }
         else return maze[y][x];
     }
+    
+    public Maze(){
+    	// Empty constructor
+    }
 
+    public Maze(int[][] maze){
+    	this.maze = maze;
+    	this.h = maze.length;
+    	this.w = maze[0].length;
+    }
     /* Predefined mazes */
     private int[][] baseMaze1 = {
             {1,1,1,1,1,1,1,1,1,1},

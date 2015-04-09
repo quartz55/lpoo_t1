@@ -2,9 +2,11 @@ package maze.GameObjects;
 
 public class Hero extends GameObject{
 
+    private boolean dead = false;
     private boolean sword = false;
     private boolean shield = false;
 
+    private int prevX, prevY;
 
     private int darts = 0;
 
@@ -25,6 +27,9 @@ public class Hero extends GameObject{
 
     public void update(Maze maze){
         updateCliChar();
+        
+        prevX = getX();
+        prevY = getY();
 
         if(maze.getPosition(this.getX()+this.getXspeed(), this.getY()+this.getYspeed()) == 1
                 || (maze.getPosition(this.getX()+this.getXspeed(), this.getY()+this.getYspeed()) == 2 && !this.hasSword())){
@@ -37,6 +42,11 @@ public class Hero extends GameObject{
 
         this.setXspeed(0);
         this.setYspeed(0);
+    }
+    
+    public void goBack(){
+    	setX(prevX);
+    	setY(prevY);
     }
 
     public boolean hasSword() {
@@ -63,4 +73,10 @@ public class Hero extends GameObject{
     public void setDarts(int darts) {
         this.darts = darts;
     }
+	public boolean isDead() {
+		return dead;
+	}
+	public void setDead(boolean dead) {
+		this.dead = dead;
+	}
 }

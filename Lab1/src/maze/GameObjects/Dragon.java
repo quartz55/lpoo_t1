@@ -19,8 +19,6 @@ public class Dragon extends GameObject{
     }
 
     public void update(Maze maze){
-    	fire = false;
-    	if(Math.random() <= chanceToBreatheFire) fire = true;
         if(difficulty > 0) {
             Random rand = new Random();
             if (rand.nextBoolean()) {
@@ -31,6 +29,9 @@ public class Dragon extends GameObject{
         }
 
         if(difficulty > 1) {
+        	fire = false;
+        	if(Math.random() <= chanceToBreatheFire) fire = true;
+
             if (sleeping) {
                 this.setCliChar('d');
                 if (Math.random() <= chanceToWake)
