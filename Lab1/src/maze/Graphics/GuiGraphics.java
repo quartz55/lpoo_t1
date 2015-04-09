@@ -37,9 +37,17 @@ public class GuiGraphics implements Graphics{
         g_window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         g_window.getContentPane().setLayout(new BorderLayout(0, 0));
         
-        JPanel panel = new JPanel();
-        g_window.getContentPane().add(panel);
-        panel.setLayout(new BorderLayout(0, 0));
+        g_panel = new GamePanel(input, 640, 640);
+        g_window.getContentPane().add(g_panel, BorderLayout.CENTER);
+        
+        JPanel panel_1 = new JPanel();
+        g_window.getContentPane().add(panel_1, BorderLayout.SOUTH);
+        
+        JButton btnNewButton = new JButton("New button");
+        panel_1.add(btnNewButton);
+        
+        JButton btnNewButton_1 = new JButton("New button");
+        panel_1.add(btnNewButton_1);
         g_window.setVisible(true);
 	}
 
