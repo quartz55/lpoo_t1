@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GuiGraphics implements Graphics{
 	
@@ -37,17 +39,40 @@ public class GuiGraphics implements Graphics{
         g_window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         g_window.getContentPane().setLayout(new BorderLayout(0, 0));
         
-        g_panel = new GamePanel(input, 640, 640);
-        g_window.getContentPane().add(g_panel, BorderLayout.CENTER);
+       // g_panel = new GamePanel(input, 640, 640);
+       // g_window.getContentPane().add(g_panel, BorderLayout.CENTER);
+        
+        JPanel panel = new JPanel();
+        g_window.getContentPane().add(panel, BorderLayout.CENTER);
         
         JPanel panel_1 = new JPanel();
         g_window.getContentPane().add(panel_1, BorderLayout.SOUTH);
         
-        JButton btnNewButton = new JButton("New button");
+        JButton btnNewButton = new JButton("Close");
+        btnNewButton.addMouseListener(new MouseAdapter() {
+        	
+        	public void mouseClicked(MouseEvent arg0) {
+        		
+        		close(true);
+        		
+        	}
+        });
+        
         panel_1.add(btnNewButton);
         
-        JButton btnNewButton_1 = new JButton("New button");
+        JButton btnNewButton_1 = new JButton("Play Game");
+        btnNewButton_1.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+                
+                g_panel = new GamePanel(input, 640, 640);
+                g_window.getContentPane().add(g_panel, BorderLayout.CENTER);
+                
+        	}
+        });
+        
         panel_1.add(btnNewButton_1);
+        
         g_window.setVisible(true);
 	}
 
