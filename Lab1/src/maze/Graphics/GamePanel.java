@@ -1,30 +1,19 @@
 package maze.Graphics;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-
-import java.awt.GridLayout;
-
-import javax.swing.BoxLayout;
-
-import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-
-import java.awt.BorderLayout;
-
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import maze.GameObjects.*;
 import maze.Input.Input;
+import maze.logic.GameSettings;
+import maze.logic.GameObjects.*;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel
@@ -40,12 +29,29 @@ implements KeyListener{
 	private ArrayList<Dragon> dragons;
 	private ArrayList<Dart> darts;
 
+	/* Images */
+	private BufferedImage hero_img;
+	private BufferedImage sword_img;
+	private BufferedImage shield_img;
+	private BufferedImage dragon_img;
+	private BufferedImage dragonSleeping_img;
+	private BufferedImage dart_img;
 
 	public GamePanel(Input input, int width, int height) {
 		this.addKeyListener(this);
 		this.input = input;
 		this.WIDTH = width;
 		this.HEIGHT = height;
+		
+		try{
+            hero_img =  ImageIO.read(new File("images/hero.png"));
+            sword_img =  ImageIO.read(new File("images/sword.png"));
+            shield_img =  ImageIO.read(new File("images/shield.png"));
+            dragon_img =  ImageIO.read(new File("images/dragon.png"));
+            dragonSleeping_img =  ImageIO.read(new File("images/dragon_sleep.png"));
+            dart_img =  ImageIO.read(new File("images/dart.png"));
+			
+		} catch(IOException e){e.printStackTrace();}
 	}
 
 	public void draw(){ repaint();}
@@ -72,64 +78,50 @@ implements KeyListener{
 			}
 		}
 
-		g.setColor(Color.ORANGE);
 		for(int i = 0; i < darts.size(); i++)
-			g.fillRect(darts.get(i).getX()*gridW, darts.get(i).getY()*gridH, gridW, gridH);
+			g.drawImage(dart_img, darts.get(i).getX()*gridW, darts.get(i).getY()*gridH, gridH, gridW, null);
 
-		g.setColor(Color.GREEN);
-		g.fillOval(hero.getX()*gridW, hero.getY()*gridH, gridW, gridH);
+		g.drawImage(hero_img,hero.getX()*gridW, hero.getY()*gridH, gridW, gridH, null);
+
 		if(!sword.isPickedUp()){
-			g.setColor(Color.CYAN);
-			g.fillRect(sword.getX()*gridW+gridW/4, sword.getY()*gridH, gridW/2, gridH);
+			g.drawImage(sword_img,sword.getX()*gridW, sword.getY()*gridH, gridW, gridH, null);
 		}
 		if(!shield.isPickedUp()){
-			g.setColor(Color.GRAY);
-			g.fillOval(shield.getX()*gridW+gridW/4, shield.getY()*gridH, gridW/2, gridH);
+			g.drawImage(shield_img,shield.getX()*gridW, shield.getY()*gridH, gridW, gridH, null);
 		}
 
-		g.setColor(Color.RED);
 		for(int i = 0; i < dragons.size(); i++){
-			if(dragons.get(i).isSleeping()) g.setColor(Color.MAGENTA);
-			g.fillRect(dragons.get(i).getX()*gridW, dragons.get(i).getY()*gridH, gridW, gridH);
+			if(dragons.get(i).isSleeping()){
+				g.drawImage(dragonSleeping_img,dragons.get(i).getX()*gridW, dragons.get(i).getY()*gridH, gridW, gridH, null);
+			}
+			else g.drawImage(dragon_img,dragons.get(i).getX()*gridW, dragons.get(i).getY()*gridH, gridW, gridH, null);
 		}
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		switch (e.getKeyCode()){
-		case KeyEvent.VK_Q:
-			input.addInput("q");
-			break;
-		case KeyEvent.VK_W:
+		int kcode = e.getKeyCode();
+		if(kcode == GameSettings.K_UP)
 			input.addInput("w");
-			break;
-		case KeyEvent.VK_S:
-			input.addInput("s");
-			break;
-		case KeyEvent.VK_A:
+		if(kcode == GameSettings.K_LEFT)
 			input.addInput("a");
-			break;
-		case KeyEvent.VK_D:
+		if(kcode == GameSettings.K_DOWN)
+			input.addInput("s");
+		if(kcode == GameSettings.K_RIGHT)
 			input.addInput("d");
-			break;
-		case KeyEvent.VK_F:
-			System.out.println("FIRE");
+		if(kcode == GameSettings.K_FIRE)
 			input.addInput("f");
-			break;
-		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
+	
+	public Input getInput(){ return this.input;}
 
 	public void setMaze(Maze maze){ this.maze = maze;}
 	public void setHero(Hero hero){ this.hero = hero;}
@@ -137,4 +129,11 @@ implements KeyListener{
 	public void setShield(Shield shield){ this.shield = shield;}
 	public void setDragons(ArrayList<Dragon> dragons){ this.dragons = dragons;}
 	public void setDarts(ArrayList<Dart> darts){ this.darts = darts;}
+
+	public Maze getMaze(){ return this.maze;}
+	public Hero getHero(){ return this.hero;}
+	public Sword getSword(){ return this.sword;}
+	public Shield getShield(){ return this.shield;}
+	public ArrayList<Dragon> getDragons(){ return this.dragons;}
+	public ArrayList<Dart> getDarts(){ return this.darts;}
 }

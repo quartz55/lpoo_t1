@@ -2,7 +2,7 @@ package maze.Graphics;
 
 import java.util.ArrayList;
 
-import maze.GameObjects.*;
+import maze.logic.GameObjects.*;
 
 public class CliGraphics implements Graphics{
 
@@ -55,13 +55,26 @@ public class CliGraphics implements Graphics{
             System.out.println();
         }
         System.out.println("Darts: " + hero.getDarts());
+		System.out.print("Command(w/a/s/d/f)? ");
 	}
 
 	@Override
-	public void close(boolean win) {
+	public void gameOver(boolean win) {
 		if(win)
 			System.out.println("You win!");
 		else
 			System.out.println("You lose!");
+	}
+
+	@Override
+	public void close() {
+	}
+
+	@Override
+	public void loadGame() {
+	}
+
+	@Override
+	public void saveGame() {
 	}
 }

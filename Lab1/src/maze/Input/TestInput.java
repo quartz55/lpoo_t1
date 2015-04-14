@@ -16,8 +16,6 @@ public class TestInput implements Input{
 
 	@Override
 	public void addInput(String string) {
-		// TODO Auto-generated method stub
-		
 	}
 
 
