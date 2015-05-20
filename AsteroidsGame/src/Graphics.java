@@ -33,14 +33,8 @@ public class Graphics extends JPanel{
 		JPanel buttons_panel = new JPanel();
 		south_panel.add(buttons_panel, BorderLayout.SOUTH);
 
-		JButton btnNewGame = new JButton("New Game");
+		JButton btnNewGame = new JButton("Play Game");
 		buttons_panel.add(btnNewGame);
-		
-		JButton btnLoadGame = new JButton("Load Game");
-		buttons_panel.add(btnLoadGame);
-		
-		JButton btnSaveGame = new JButton("Save Game");
-		buttons_panel.add(btnSaveGame);
 		
 		JButton btnOptions = new JButton("Options");
 		buttons_panel.add(btnOptions);
